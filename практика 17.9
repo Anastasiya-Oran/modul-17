@@ -1,0 +1,50 @@
+
+def qsort(array, left, right):
+    middle = (left + right) // 2
+
+    p = array[middle]
+    i, j = left, right
+    while i <= j:
+        while array[i] < p:
+            i += 1
+        while array[j] > p:
+            j -= 1
+        if i <= j:
+            array[i], array[j] = array[j], array[i]
+            i += 1
+            j -= 1
+
+    if j > left:
+        qsort(array, left, j)
+    if right > i:
+        qsort(array, i, right)
+
+
+def binary_search(array, element, left, right):
+
+    if left > right:  
+        return False  
+
+    middle = (right + left) // 2  
+ 
+    if array[middle] < element and middle + 1 <= len(array) - 1 and array[middle + 1] >= element:
+   
+
+        return middle  
+    elif element <= array[middle] and middle > 0:  
+        
+        return binary_search(array, element, left, middle - 1)
+    else:  
+        return binary_search(array, element, middle + 1, right)
+
+array = [int(x) for x in input("Введите числа в любом порядке, через пробел: ").split()]
+num = int(input("Введите числ для поиска: "))
+qsort(array,0,len(array)-1)
+
+print("Сортированный массив",array)
+
+array_num = binary_search(array, num, 0, len(array)-1)
+if array_num is not False:
+    print("Номер позиции элемента (отсчет с 0), который меньше введенного пользователем числа, а следующий за ним больше или равен этому числу: ",array_num)
+else:
+    print("Введенное число выходит за рамки массива")
